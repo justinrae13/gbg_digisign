@@ -1,0 +1,159 @@
+<div class="assign_wrapper">
+    <div class="assign_box">
+        <div class="box_header">
+            <h1>Assigner l'affiche à vos sites</h1>
+            <p>Sélectionnez vos paramètres</p>
+        </div>
+        <div class="box_body">
+            <input type="hidden" id="announcement_id">
+            <div class="input_row">
+                <label for="site_list">Sélectionnez le site :</label>
+                <select id="site_list"></select>
+            </div>
+            <div class="input_row_wrapper">
+                <div class="input_row">
+                    <label for="site_list">Date de début d'affichage :</label>
+                    <input type="date" id="dateDeb">
+                </div>
+                <div class="input_row">
+                    <label for="site_list">Heure de début d'affichage :</label>
+                    <input type="time" id="heureDeb">
+                </div>
+            </div>
+            <div class="input_row_wrapper">
+                <div class="input_row">
+                    <label for="site_list">Date de fin d'affichage :</label>
+                    <input type="date" id="dateFin">
+                </div>
+                <div class="input_row">
+                    <label for="site_list">Heure de fin d'affichage :</label>
+                    <input type="time" id="heureFin">
+                </div>
+            </div>
+            <div class="input_row" style="margin-top: 10px">
+                <label for="site_list">Sélectionnez la durée d'affichage :</label>
+                <select id="duration">
+                    <option value="30000">0.5 minute</option>
+                    <option value="60000">1 minute</option>
+                    <option value="120000">2 minutes</option>
+                    <option value="180000">3 minutes</option>
+                    <option value="240000">4 minutes</option>
+                    <option value="300000">5 minutes</option>
+                </select>
+            </div>
+            <h2>Liste des sites assignés à cet affiche:</h2>
+            <div class="list_assigned_site">
+                <div class="list_assigned_site_cover"></div>
+            </div>
+        </div>
+        <div class="box_footer">
+            <a onclick='assignSite()'>OK</a>
+            <a onclick='closePopup()'>Annuler</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        $(".assign_wrapper").css("display","flex");
+
+        $(".assign_wrapper").click(function(event){
+            if(!$(event.target).closest('.assign_box').length && !$(event.target).is('.assign_box')) {
+                $("#popUpBackdrop").html("");
+                $("#popUpBackdrop").fadeOut(250);
+            }
+        })
+
+        $.ajax({
+            type: "GET",
+            url: "crud.php",
+            data: {"getAllSites" : true},
+            success: function(res){
+                var sites = JSON.parse(res);
+                for(var i = 0; i < sites.length; i++){
+                    $("#site_list").append("<option value='"+sites[i].site_id+"'>"+sites[i].site_name+"</option>");
+                }
+            }
+        });
+
+        setTimeout(() => {
+            var annID = $("#announcement_id").val();
+            $.ajax({
+            type: "GET",
+            url: "crud.php",
+            data: {"getAllAssigedSites" : true, annID : annID},
+            success: function(res){
+                $(".list_assigned_site_cover").fadeOut(300);
+                // $(".list_assigned_site").html("");
+                if(res === "0"){
+                    $(".list_assigned_site").append("<h3>Aucun site assigné</h3>")
+                }else{
+                    var sites = JSON.parse(res);
+                    for(var i = 0; i < sites.length; i++){
+                        var duration = sites[i].as_duration / 60000;
+                        $(".list_assigned_site").append(
+                            "<div class='list_assigned_site_row'>"+
+                                "<div>"+
+                                    "<p><b>Site: </b>"+sites[i].site_name+"</p>"+
+                                    "<p><b>Début: </b>"+sites[i].as_start+"</p>"+
+                                    "<p><b>Fin: </b>"+sites[i].as_end+"</p>"+
+                                    "<p><b>Durée: </b>"+duration+" minute(s)</p>"+
+                                "</div>"+
+                                "<div><button onclick='deleteAssign("+sites[i].as_id+")'><i class='fas fa-trash-alt'></i></button></div>"+
+                            "</div>"
+                        );
+                    }
+                }
+            }
+        });
+
+        }, 500);
+
+    });
+
+    function closePopup(){
+        $("#popUpBackdrop").html("");
+        $("#popUpBackdrop").fadeOut(250);
+    }
+
+    function assignSite(){
+        var annID = $("#announcement_id").val();
+        var dateDeb = $("#dateDeb").val();
+        var dateFin = $("#dateFin").val();
+        var heureDeb = $("#heureDeb").val();
+        var heureFin = $("#heureFin").val();
+        var siteID = $("#site_list").val();
+        var duration = $("#duration").val();
+
+        var start = dateDeb+" "+heureDeb;
+        var end = dateFin+" "+heureFin;
+
+        if(dateDeb === "" || dateFin === "" || heureDeb === "" || heureFin === "" || siteID === ""){
+            alert("Tous les champs sont obligatoires !")
+        }else{
+            $.ajax({
+                type : "POST",
+                url : "crud.php",
+                data : {"assignSite" : true, annID : annID, siteID : siteID, start : start, end : end, duration : duration},
+                success: function(res){
+                    closePopup();
+                }
+            })
+        }
+    }
+
+    function deleteAssign(id){
+        if (confirm("Êtes vous sûr de vouloir suprimmer cette rubrique ?") == true) {
+            $.ajax({
+                type : "POST",
+                url : "crud.php",
+                data : {"deleteAssignSite" : true, id : id},
+                success: function(res){
+                    closePopup();
+                }
+            })
+        } else {
+            console.log("Annulé")
+        }
+    }
+</script>

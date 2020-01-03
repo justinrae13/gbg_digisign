@@ -1,0 +1,241 @@
+*{
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+
+body,html{
+    padding: 0;
+    margin: 0;
+}
+
+
+body{
+    margin: 0;
+    padding: 0;
+    background-color: rgb(236, 236, 236);
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.dynamicDiv{
+    display: inline-flex;
+    height: 70%;
+    cursor: move;
+    padding: 3px;
+    position: absolute;
+}
+
+.dynamicDiv img{
+    width: 100%;
+    height: 100%;
+}
+
+.dynamicTextarea{
+    height: 100px;
+    width: 300px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3px;
+    cursor: move;
+    position: absolute;
+    background-color: transparent;
+    
+}
+
+.dynamicTextarea .contentEditable{
+    resize: none;
+    height:100%;
+    width:100%;
+    border: none;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: transparent;
+    position: relative;
+    z-index: 100;
+}
+
+.container{
+    width: 1200px;
+    min-width: 1200px;
+    height: 600px;
+    min-height: 600px;
+    background-color: rgba(255, 255, 255, 0.9);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(204, 204, 204, 0.5);
+}
+
+.dots_bg{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+    z-index: -1;
+    opacity: .2;
+}
+
+.header{
+    height: 60px;
+    width: 1200px;
+    min-width: 1200px;
+    background-color: #2a394d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 5px;
+    font-size: .8rem;
+    width: 100%;
+}
+
+.header label{
+    color: #fff;
+    margin-right: 20px;
+}
+
+.header button{
+    border: none;
+    border-radius: 3px;
+    color: #fff;
+    background-color: transparent;
+    padding: 1rem;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.header button i{
+    font-size: 2rem;
+}
+
+.header button span{
+    font-size: .65rem;
+}
+
+/* Bullets */
+#bulletNW{
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    height: 10px;
+    width: 10px;
+    border: 1px solid #808080;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+#bulletNE{
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    height: 10px;
+    width: 10px;
+    border: 1px solid #808080;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+#bulletSW{
+    position: absolute;
+    bottom: -5px;
+    left: -5px;
+    height: 10px;
+    width: 10px;
+    border: 1px solid #808080;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+#bulletSE{
+    position: absolute;
+    bottom: -5px;
+    right: -5px;
+    height: 10px;
+    width: 10px;
+    border: 1px solid #808080;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.ui-icon{ 
+    background-image: url("../img/rand.png") !important; 
+    height: 1px !important;
+    width: 1px !important;
+}
+
+.loader_canvas_bg{
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(255, 255, 255, 0.85);
+    z-index: 1000;
+    display: none;
+}
+
+.loader_wrapper{
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.loader_wrapper p{
+    margin: 0;
+    color: rgb(0, 178, 139);
+    font-size: .8rem;
+    font-weight: 700;
+}
+
+.loader,
+.loader:after {
+  border-radius: 50%;
+  width: 10em;
+  height: 10em;
+}
+
+.loader {
+  margin: 10px auto;
+  font-size: 5px;
+  position: relative;
+  text-indent: -9999em;
+  border-top: 1.1em solid rgba(0, 178, 139, 0.2);
+  border-right: 1.1em solid rgba(0, 178, 139, 0.2);
+  border-bottom: 1.1em solid rgba(0, 178, 139, 0.2);
+  border-left: 1.1em solid rgb(0, 178, 139);
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation: load8 .8s infinite linear;
+  animation: load8 .8s infinite linear;
+}
+@-webkit-keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}

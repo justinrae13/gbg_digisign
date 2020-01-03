@@ -1,0 +1,89 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css" />
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,700,900&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="css/canvas.css">
+    <link rel="stylesheet" href="css/popUps.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="http://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+</head>
+<body>
+    <div class="loader_canvas_bg">
+        <div class="loader_wrapper">
+            <div class="loader">Loading...</div>
+            <p>Chargement</p>
+        </div>
+    </div>
+    <div class="header">
+        <form action="" method="post" enctype="multipart/form-data" style="display:none" id="Img_Upl_Form">
+            <input type="file" name="images" id="addImage">
+            <input type="submit" name="uplImage" id="Upl_Btn">
+        </form>
+        <button onclick="$('#addImage').click()"><i class="material-icons">insert_photo</i><span>Image</span></button>
+        &nbsp;
+        <button onclick="addTextFunc()"><i class="material-icons">format_size</i><span>Texte</span></button>
+        &nbsp;
+        <button onclick="removeBorder()"><i class="material-icons">crop_square</i><span>Bordure</span></button>
+        &nbsp;
+        <label for="font-size">
+            Taille:&nbsp;
+            <select autocomplete="off" id="font-size">
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="30">30</option>
+                <option value="40">40</option>
+                <option value="50">50</option>
+                <option value="60">60</option>
+            </select>
+        </label>
+        &nbsp;
+        <label for="font-weight">
+            Style:&nbsp;
+            <select autocomplete="off" id="font-weight">
+                <option value="400">Normal</option>
+                <option value="700">Gras</option>
+                <option value="900">Plus gras</option>
+            </select>
+        </label>
+        &nbsp;
+        <label for="alignment">
+            Alignement:&nbsp;
+            <select autocomplete="off" id="alignment">
+                <option value="left">Gauche</option>
+                <option value="right">Droit</option>
+                <option value="center">Centré</option>
+                <option value="justify">Justifié</option>
+            </select>
+        </label>        
+        &nbsp;
+        <!-- onclick="$('#Upl_Btn').click();" -->
+        <button onclick="save()"><i class="material-icons">save</i><span>Sauvegarder</span></button>
+        &nbsp;
+        <button onclick="cancel()"><i class="material-icons">close</i><span>Annuler</span></button>
+
+        <form method="post" id="imgBase" style="display:none" action="add_announcement.php">
+            <input type="hidden" name="baseImg" id="baseImgId">
+            <input type="hidden" name="contentAnn" id="contentAnnId">
+            <input type="hidden" name="nameAnn" id="nameAnnId">
+            <input type="submit" name="uploadAnnouncement" id="uploadAnnouncementId">
+        </form>
+        <form method="post" id="editimgBase" style="display:none" action="edit_announcement.php">
+            <input type="hidden" name="editbaseImg" id="editbaseImgId">
+            <input type="hidden" name="editcontentAnn" id="editcontentAnnId">
+            <input type="hidden" name="editnameAnn" id="editnameAnnId">
+            <input type="submit" name="editAnnouncement" id="editAnnouncementId">
+        </form>
+    </div>
+    <!-- Cavas -->
+    <div class="container" id="canvas"></div>
+    <img src="img/dots_bg.svg" class="dots_bg">
+    <script src="js/canvas.js"></script>
+</body>
+</html>
